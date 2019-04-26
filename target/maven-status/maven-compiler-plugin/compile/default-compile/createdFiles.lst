@@ -1,0 +1,15 @@
+com\ecotage\model\Category.class
+com\ecotage\repo\CategoryRepository.class
+com\ecotage\exception\ExceptionHandlerControllerAdvice.class
+com\ecotage\model\CategoryList.class
+com\ecotage\service\ProductService.class
+com\ecotage\model\Product.class
+com\ecotage\main\EcotageApplication.class
+com\ecotage\repo\ProductRepositry.class
+com\ecotage\exception\ProductServiceException.class
+com\ecotage\exception\ResourceNotFoundException.class
+com\ecotage\service\impl\ProductServiceImpl.class
+com\ecotage\exception\ExceptionReponse.class
+com\ecotage\main\JpaConfiguration.class
+com\ecotage\controller\ProductController.class
+com\ecotage\model\ProductDetail.class
