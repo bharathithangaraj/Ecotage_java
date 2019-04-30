@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,127 +16,192 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 @Entity
-@Table(name="product")
+//@Table(name="product")
 public class Product {
+	
+	private static final long serialVersionUID = 1L;
+
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="prod_id")
-	private Long id;
+	private Long productId;
 	
-	
-	private String name;
-	private String imgUrl;
-	private String navigateTo;
-	private double price;
-	private double offer;
-	private int quantity;
-	private String productInfo;
+	@Column(name="productname")
+	private String productName;
 	private String title;
-	private Date createdOn;
-	private Date modifiedOn;
+	@Column(name="navigageto")
+	private String navigageTo;
+	private Double price;
+	private Long quantity;
 	private int status;
+	@Column(name="createdon")
+	private Date createdOn;
+	@Column(name="modifiedon")
+	private Date modifiedOn;
 	
-	@OneToOne(cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
-	@JoinColumn(name="prod_id")
+	
+	@OneToOne(mappedBy="product",fetch=FetchType.LAZY)
+	@JoinColumn(name="product_detail_id")
 	@JsonManagedReference
 	private ProductDetail productDetail;
 	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="offer_id")
+	private Offer offer;
 	
-	@ManyToOne(cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
-	@JoinColumn(name="cat_list_id")
-	@JsonBackReference
-	private CategoryList categoryList;
+	@OneToMany( fetch = FetchType.LAZY)	
+	@JoinColumn(name="imageId")
+	private Set<Image> imageList;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="category_id") // alter the table with column name of category_id
+	private Category category;
 	
+//	@ManyToOne(cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
+//	@JoinColumn(name="cat_list_id")
+//	@JsonBackReference
+//	private CategoryList categoryList;
+
 	
-	
-	
-	
-	public Long getId() {
-		return id;
+	public Long getProductId() {
+		return productId;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getImgUrl() {
-		return imgUrl;
-	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-	public String getNavigateTo() {
-		return navigateTo;
-	}
-	public void setNavigateTo(String navigateTo) {
-		this.navigateTo = navigateTo;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public double getOffer() {
+
+	public Offer getOffer() {
 		return offer;
 	}
-	public void setOffer(double offer) {
+
+	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
+
+	
+
+	public Set<Image> getImageList() {
+		return imageList;
+	}
+
+	public void setImageList(Set<Image> imageList) {
+		this.imageList = imageList;
+	}
+
 	public ProductDetail getProductDetail() {
 		return productDetail;
 	}
+
 	public void setProductDetail(ProductDetail productDetail) {
 		this.productDetail = productDetail;
 	}
-	public int getQuantity() {
-		return quantity;
+
+	public Category getCategory() {
+		return category;
 	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public String getProductInfo() {
-		return productInfo;
+
+	public String getProductName() {
+		return productName;
 	}
-	public void setProductInfo(String productInfo) {
-		this.productInfo = productInfo;
-	}
+
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+
+	public String getNavigageTo() {
+		return navigageTo;
 	}
-	public Date getModifiedOn() {
-		return modifiedOn;
+
+	public Double getPrice() {
+		return price;
 	}
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
+
+	public Long getQuantity() {
+		return quantity;
 	}
+
 	public int getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
+
 	public Date getCreatedOn() {
 		return createdOn;
 	}
+
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+
+//	public ProductDetail getProductDetail() {
+//		return productDetail;
+//	}
+//
+//	public Offer getOffer() {
+//		return offer;
+//	}
+//
+//	public Image getImage() {
+//		return image;
+//	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setNavigageTo(String navigageTo) {
+		this.navigageTo = navigageTo;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+//	public void setProductDetail(ProductDetail productDetail) {
+//		this.productDetail = productDetail;
+//	}
+//
+//	public void setOffer(Offer offer) {
+//		this.offer = offer;
+//	}
+//
+//	public void setImage(Image image) {
+//		this.image = image;
+//	}
 	
-	
-	
-	
+
+
+			
 
 }

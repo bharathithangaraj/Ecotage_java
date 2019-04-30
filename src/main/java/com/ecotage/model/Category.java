@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  *
  */
 @Entity
-@Table(name="category")
 public class Category implements Serializable {
 	
 	private static final long serialVersionUID = -8003246612943943723L;
@@ -33,63 +32,102 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="cat_id")
-	private Long id;
+	private Long categoryId;
 	
+	@Column(name="categoryname")
 	private String categoryName;
+	@Column(name="categorytype")
+	private String categoryType;
+	@Column(name="categorydesc")
 	private String categoryDesc;
-	
-	private Date createdOn;
-	private Date modifiedOn;
+	@Column(name="status")
 	private int status;
+	@Column(name="createdon")
+	private Date createdOn;
+	@Column(name="modifiedon")
+	private Date modifiedOn;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_id")
-	@JsonManagedReference
-	private Set<CategoryList> categoryList;
+	@OneToMany(mappedBy="category")
+	private List<Product> productList;
 	
 	
-	
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+
 	public String getCategoryName() {
 		return categoryName;
 	}
+
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
+
+	public String getCategoryType() {
+		return categoryType;
+	}
+
+
+	public void setCategoryType(String categoryType) {
+		this.categoryType = categoryType;
+	}
+
+
 	public String getCategoryDesc() {
 		return categoryDesc;
 	}
+
+
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Set<CategoryList> getCategoryList() {
-		return categoryList;
-	}
-	public void setCategoryList(Set<CategoryList> categoryList) {
-		this.categoryList = categoryList;
-	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+
+
 	public int getStatus() {
 		return status;
 	}
+
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+
 	
 }

@@ -20,15 +20,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
-@Table(name="categorylist")
+//@Entity
+//@Table(name="categorylist")
 public class CategoryList {
 	
 	private static final long serialVersionUID = -8003246612943943723L;
 	
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="cat_list_id")
+//	@Id
+//	@GeneratedValue(strategy= GenerationType.IDENTITY)
+//	@Column(name="cat_list_id")
 	private Long id;
 	
 	private String itemName;
@@ -38,15 +38,15 @@ public class CategoryList {
 	private Date modifiedOn;
 	private int status;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_list_id")
-	@JsonManagedReference
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@JoinColumn(name="cat_list_id")
+//	@JsonManagedReference
 	private Set<Product> product;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name = "cat_id")
-	@JsonBackReference
+//	@ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+//	@JoinColumn(name = "cat_id")
+//	@JsonBackReference
 	private Category category;
 	
 	
