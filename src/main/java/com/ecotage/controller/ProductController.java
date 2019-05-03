@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecotage.exception.ProductServiceException;
 import com.ecotage.exception.ResourceNotFoundException;
+import com.ecotage.model.CartDetail;
 import com.ecotage.model.Category;
 import com.ecotage.model.Product;
 import com.ecotage.repo.CategoryRepository;
+import com.ecotage.request.dao.CategoryReq;
+import com.ecotage.response.dao.CategoryRes;
 import com.ecotage.service.ProductService;
 
 @RestController
@@ -29,16 +32,15 @@ public class ProductController {
 	@RequestMapping(value="/showAllCategory", method = RequestMethod.GET)
 	public List<Category> categories(){	
 		
-		
 		return productService.getAllCategories(); 
 	}
 
 	@RequestMapping(value="/addCategory", method = RequestMethod.POST)
-	public Category addCategories(@RequestBody Category category)  throws ResourceNotFoundException, ProductServiceException{
+	public CategoryRes addCategories(@RequestBody CategoryReq cateReq)  throws ResourceNotFoundException, ProductServiceException{
 
-		Category cate = null;
+		CategoryRes cate = null;
 		try {
-			cate = productService.addCategory(category);
+			cate = productService.addCategory(cateReq);
 
 			if(cate == null ) {
 				throw new ResourceNotFoundException("Unable to add Catgory");
@@ -89,6 +91,9 @@ public class ProductController {
 		
 
 	}
+	
+	
+	
 
 
 

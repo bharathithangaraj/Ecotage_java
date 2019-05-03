@@ -28,9 +28,21 @@ public class Image {
 	private Date modifiedOn;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="product_id")
+	@JoinColumn(name="prod_id")
 	private Product product;
 	
+	public Image() {
+		
+	}
+	
+	public Image(String imageUrl, String imageType, int status, Date createdOn, Date modifiedOn) {
+		super();
+		this.imageUrl = imageUrl;
+		this.imageType = imageType;
+		this.status = status;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+	}
 	
 	public Long getImageId() {
 		return imageId;

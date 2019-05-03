@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +21,7 @@ public class Offer {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-//	@Column(name="offer_id")
+	@Column(name="offer_id")
 	private Long offerId;
 	private int percentage;
 	private String offerCode;
@@ -27,8 +30,30 @@ public class Offer {
 	private Date createdOn;
 	private Date modifiedOn;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="prod_id")
+	private Product product;
+	
+	public Offer() {
+		
+	}
 	
 	
+	public Offer(int percentage, String offerCode, String offerDetail, int status, Date createdOn, Date modifiedOn) {
+		super();
+		this.percentage = percentage;
+		this.offerCode = offerCode;
+		this.offerDetail = offerDetail;
+		this.status = status;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 	public Long getOfferId() {
 		return offerId;
 	}

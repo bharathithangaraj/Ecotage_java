@@ -13,7 +13,7 @@ public interface ProductRepositry extends JpaRepository<Product, Long> {
 	
 //	List<Product> findByCategoryList(Long id);
 //	
-	@Query(value="select * from product where cat_list_id = ?", nativeQuery=true)
+	@Query(value="select * from product where cat_id = ?", nativeQuery=true)
 	List<Product> findProductByCategory(Long categoryId);
 
 	//Optional<Product> findByCategoryList(Long id);

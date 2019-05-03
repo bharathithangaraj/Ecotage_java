@@ -39,50 +39,53 @@ public class Product {
 	@Column(name="navigageto")
 	private String navigageTo;
 	private Double price;
-	private Long quantity;
+	private int quantity;
 	private int status;
 	@Column(name="createdon")
 	private Date createdOn;
 	@Column(name="modifiedon")
 	private Date modifiedOn;
 	
+	public Product() {
+		
+	}
 	
-	@OneToOne(mappedBy="product",fetch=FetchType.LAZY)
-	@JoinColumn(name="product_detail_id")
-	@JsonManagedReference
+	
+	public Product(String productName, String title, String navigageTo, Double price, int quantity, int status,
+			Date createdOn, Date modifiedOn, Category category) {
+		super();
+		this.productName = productName;
+		this.title = title;
+		this.navigageTo = navigageTo;
+		this.price = price;
+		this.quantity = quantity;
+		this.status = status;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+//		this.productDetail = productDetail;
+//		this.offer = offer;
+//		this.imageList = imageList;
+		this.category = category;
+	}
+
+
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="product",fetch=FetchType.LAZY)
+	//@JsonManagedReference
 	private ProductDetail productDetail;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="offer_id")
-	private Offer offer;
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="product",fetch = FetchType.LAZY)
+	private Set<Offer> offer;
 	
-	@OneToMany( fetch = FetchType.LAZY)	
-	@JoinColumn(name="imageId")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="product", fetch = FetchType.LAZY)	
 	private Set<Image> imageList;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="category_id") // alter the table with column name of category_id
+	@JoinColumn(name="cat_id") // alter the table with column name of category_id
 	private Category category;
-	
-//	@ManyToOne(cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
-//	@JoinColumn(name="cat_list_id")
-//	@JsonBackReference
-//	private CategoryList categoryList;
-
 	
 	public Long getProductId() {
 		return productId;
 	}
-
-	public Offer getOffer() {
-		return offer;
-	}
-
-	public void setOffer(Offer offer) {
-		this.offer = offer;
-	}
-
-	
 
 	public Set<Image> getImageList() {
 		return imageList;
@@ -124,10 +127,7 @@ public class Product {
 		return price;
 	}
 
-	public Long getQuantity() {
-		return quantity;
-	}
-
+	
 	public int getStatus() {
 		return status;
 	}
@@ -140,17 +140,6 @@ public class Product {
 		return modifiedOn;
 	}
 
-//	public ProductDetail getProductDetail() {
-//		return productDetail;
-//	}
-//
-//	public Offer getOffer() {
-//		return offer;
-//	}
-//
-//	public Image getImage() {
-//		return image;
-//	}
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
@@ -172,9 +161,7 @@ public class Product {
 		this.price = price;
 	}
 
-	public void setQuantity(Long quantity) {
-		this.quantity = quantity;
-	}
+	
 
 	public void setStatus(int status) {
 		this.status = status;
@@ -188,6 +175,30 @@ public class Product {
 		this.modifiedOn = modifiedOn;
 	}
 
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+	public Set<Offer> getOffer() {
+		return offer;
+	}
+
+
+	public void setOffer(Set<Offer> offer) {
+		this.offer = offer;
+	}
+
+	
+	
+	
+	
 //	public void setProductDetail(ProductDetail productDetail) {
 //		this.productDetail = productDetail;
 //	}

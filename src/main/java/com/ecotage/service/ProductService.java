@@ -7,15 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.ecotage.exception.ProductServiceException;
+import com.ecotage.model.CartDetail;
 import com.ecotage.model.Category;
 import com.ecotage.model.Product;
+import com.ecotage.request.dao.CategoryReq;
+import com.ecotage.response.dao.CategoryRes;
 
 @Service
 public interface ProductService {
 	
 	public List<Category> getAllCategories();
 	
-	public Category addCategory(Category category) throws ProductServiceException;
+	public CategoryRes addCategory(CategoryReq category) throws ProductServiceException;
 	
 	public List<Product> getAllProducts();
 	
@@ -25,6 +28,8 @@ public interface ProductService {
 	
 	
 	public List<Product> getProductByCategories(Long id);
+	
+	
 	
 
 }

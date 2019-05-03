@@ -21,24 +21,35 @@ public class ProductDetail {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-//	@Column(name="prod_det_id")
+	@Column(name="prod_det_id")
 	private Long productDetailId;
 	
 	@Column(columnDefinition="TEXT")
 	private String description;
 	
 	private String specificaton;
+	@Column(name="createdon")
 	private Date createdOn;
+	@Column(name="modifiedon")
 	private Date modifiedOn;
 	
-	
-	@OneToOne
-  @JoinColumn(name = "product_id")
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "prod_id")
 	@JsonBackReference
     private Product product;
 
 	
 	
+	
+
+	public ProductDetail(String description, String specificaton, Date createdOn, Date modifiedOn) {
+		super();
+		this.description = description;
+		this.specificaton = specificaton;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+	}
+
 
 	public Product getProduct() {
 		return product;

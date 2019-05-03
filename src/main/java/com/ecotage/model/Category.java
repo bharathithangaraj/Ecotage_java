@@ -46,18 +46,41 @@ public class Category implements Serializable {
 	private Date createdOn;
 	@Column(name="modifiedon")
 	private Date modifiedOn;
+	@Column(name="navigateto")
+	private String navigateTo;
 	
-	@OneToMany(mappedBy="category")
-	private List<Product> productList;
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="category", fetch=FetchType.LAZY)
+	private Set<Product> productList;
 	
+	private Category() {
+		
+	}
 	
-	public List<Product> getProductList() {
+	public Category(String categoryName, String categoryType, String categoryDesc, int status, Date createdOn,
+			Date modifiedOn, String navigateTo) {
+		super();
+		this.categoryName = categoryName;
+		this.categoryType = categoryType;
+		this.categoryDesc = categoryDesc;
+		this.status = status;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+		this.navigateTo = navigateTo;
+		//this.productList = productList;
+	}
+
+
+
+
+	public Set<Product> getProductList() {
 		return productList;
 	}
 
-	public void setProductList(List<Product> productList) {
+
+	public void setProductList(Set<Product> productList) {
 		this.productList = productList;
 	}
+
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -128,6 +151,25 @@ public class Category implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
+
+	public String getNavigateTo() {
+		return navigateTo;
+	}
+
+
+	public void setNavigateTo(String navigateTo) {
+		this.navigateTo = navigateTo;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryType="
+				+ categoryType + ", categoryDesc=" + categoryDesc + ", status=" + status + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", navigateTo=" + navigateTo + ", productList=" + productList + "]";
+	}
+	
+	
+	
 
 	
 }
