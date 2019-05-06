@@ -1,6 +1,8 @@
 package com.ecotage.request.dao;
 
+import java.util.List;
 
+import com.ecotage.request.dao.ImageReq;
 
 public class CategoryReq {
 	
@@ -17,13 +19,10 @@ public class CategoryReq {
 	private String title;
 	private String description;
 	private String specification;
-	private String imageType;
-	private String imageUrl;
-	private int imgStatus;
-	private int percentage;
-	private String offerCode;
-	private String offerDetail;
-	private int offerStatus;
+	
+	private List<ImageReq> imgReqList;
+	
+	private List<OfferReq> offerList;
 	
 	
 	public String getCategoryDesc() {
@@ -105,49 +104,23 @@ public class CategoryReq {
 	public void setSpecification(String specification) {
 		this.specification = specification;
 	}
-	public String getImageType() {
-		return imageType;
+	
+	
+	public List<ImageReq> getImgReqList() {
+		return imgReqList;
 	}
-	public void setImageType(String imageType) {
-		this.imageType = imageType;
+	public void setImgReqList(List<ImageReq> imgReqList) {
+		this.imgReqList = imgReqList;
+	}
+	public List<OfferReq> getOfferList() {
+		return offerList;
+	}
+	public void setOfferList(List<OfferReq> offerList) {
+		this.offerList = offerList;
 	}
 	
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	public int getImgStatus() {
-		return imgStatus;
-	}
-	public void setImgStatus(int imgStatus) {
-		this.imgStatus = imgStatus;
-	}
-	public int getPercentage() {
-		return percentage;
-	}
-	public void setPercentage(int percentage) {
-		this.percentage = percentage;
-	}
-	public String getOfferCode() {
-		return offerCode;
-	}
-	public void setOfferCode(String offerCode) {
-		this.offerCode = offerCode;
-	}
-	public String getOfferDetail() {
-		return offerDetail;
-	}
-	public void setOfferDetail(String offerDetail) {
-		this.offerDetail = offerDetail;
-	}
-	public int getOfferStatus() {
-		return offerStatus;
-	}
-	public void setOfferStatus(int offerStatus) {
-		this.offerStatus = offerStatus;
-	}
+	
+	
 	
 	
 

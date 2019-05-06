@@ -1,6 +1,7 @@
 package com.ecotage.controller;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ import com.ecotage.model.Product;
 import com.ecotage.repo.CategoryRepository;
 import com.ecotage.request.dao.CategoryReq;
 import com.ecotage.response.dao.CategoryRes;
+import com.ecotage.response.dao.ProductRes;
+import com.ecotage.response.dao.ResponseMessage;
 import com.ecotage.service.ProductService;
 
 @RestController
@@ -30,30 +33,49 @@ public class ProductController {
 	ProductService productService;
 
 	@RequestMapping(value="/showAllCategory", method = RequestMethod.GET)
-	public List<Category> categories(){	
+	public List<CategoryRes> categories() throws ResourceNotFoundException,ProductServiceException {	
 		
-		return productService.getAllCategories(); 
+		List<CategoryRes> cateList = null;
+		try {
+			cateList = productService.getAllCategories();
+			if(cateList == null) {
+				throw new ResourceNotFoundException("Unable to Fetch Catgory");
+			}
+				
+		} catch(ProductServiceException px) {
+			throw new ProductServiceException("Internal Server Exception while retrive category");
+		}
+		return  cateList;
 	}
 
 	@RequestMapping(value="/addCategory", method = RequestMethod.POST)
-	public CategoryRes addCategories(@RequestBody CategoryReq cateReq)  throws ResourceNotFoundException, ProductServiceException{
+	public ResponseMessage addCategories(@RequestBody LinkedList<CategoryReq> cateReqList)  throws ResourceNotFoundException, ProductServiceException{
 
-		CategoryRes cate = null;
+		ResponseMessage res = null;
 		try {
-			cate = productService.addCategory(cateReq);
+			res = productService.addCategory(cateReqList);
 
-			if(cate == null ) {
-				throw new ResourceNotFoundException("Unable to add Catgory");
-			}
+			
 		} catch(ProductServiceException px) {
 			throw new ProductServiceException("Internal Server Exception while add category");
 		}
-		return  cate;
+		return  res;
 	}
 
-	@RequestMapping(value="/showAllProducts", method = RequestMethod.GET)
-	public List<Product> getAllProducts(){
-		return productService.getAllProducts(); 
+	@RequestMapping(value="/showAllProducts/{categoryName}", method = RequestMethod.GET)
+	public List<ProductRes> getAllProducts(@PathVariable("categoryName") String name) throws ResourceNotFoundException, ProductServiceException{
+		
+		List<ProductRes> prodList = null;
+		try {
+			
+			prodList = productService.getProductByCategoryName(name);
+			if(prodList == null) {
+				throw new ResourceNotFoundException("Product Not Found");
+			}
+		} catch (ProductServiceException px){
+		throw new ProductServiceException("Internal Server Exception while getting product");
+		}
+		return prodList; 
 
 	}
 

@@ -23,9 +23,12 @@ public class Offer {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="offer_id")
 	private Long offerId;
+	@Column(nullable=false)
 	private int percentage;
+	@Column(nullable=false)
 	private String offerCode;
 	private String offerDetail;
+	@Column(nullable=false)
 	private int status;
 	private Date createdOn;
 	private Date modifiedOn;
@@ -33,13 +36,13 @@ public class Offer {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="prod_id")
 	private Product product;
-	
+
+
 	public Offer() {
 		
 	}
 	
-	
-	public Offer(int percentage, String offerCode, String offerDetail, int status, Date createdOn, Date modifiedOn) {
+	public Offer(int percentage, String offerCode, String offerDetail, int status, Date createdOn, Date modifiedOn, Product product) {
 		super();
 		this.percentage = percentage;
 		this.offerCode = offerCode;
@@ -47,6 +50,7 @@ public class Offer {
 		this.status = status;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.product = product;
 	}
 	public Product getProduct() {
 		return product;

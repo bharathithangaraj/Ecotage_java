@@ -33,18 +33,37 @@ public class Product {
 	@Column(name="prod_id")
 	private Long productId;
 	
-	@Column(name="productname")
+	@Column(nullable=false)
 	private String productName;
 	private String title;
-	@Column(name="navigageto")
+	@Column(nullable=false)
 	private String navigageTo;
 	private Double price;
 	private int quantity;
+	@Column(nullable=false)
 	private int status;
-	@Column(name="createdon")
+	@Column(nullable=false)
 	private Date createdOn;
-	@Column(name="modifiedon")
+	@Column(nullable=false)
 	private Date modifiedOn;
+	
+	
+
+
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="product",fetch=FetchType.LAZY)
+	//@JsonManagedReference
+	private ProductDetail productDetail;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="product",fetch = FetchType.LAZY)
+	private Set<Offer> offer;
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="product", fetch = FetchType.LAZY)	
+	private Set<Image> imageList;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cat_id") // alter the table with column name of category_id
+	private Category category;
+	
 	
 	public Product() {
 		
@@ -62,26 +81,8 @@ public class Product {
 		this.status = status;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
-//		this.productDetail = productDetail;
-//		this.offer = offer;
-//		this.imageList = imageList;
 		this.category = category;
 	}
-
-
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="product",fetch=FetchType.LAZY)
-	//@JsonManagedReference
-	private ProductDetail productDetail;
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="product",fetch = FetchType.LAZY)
-	private Set<Offer> offer;
-	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="product", fetch = FetchType.LAZY)	
-	private Set<Image> imageList;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="cat_id") // alter the table with column name of category_id
-	private Category category;
 	
 	public Long getProductId() {
 		return productId;

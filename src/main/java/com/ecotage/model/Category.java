@@ -33,26 +33,24 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="cat_id")
 	private Long categoryId;
-	
-	@Column(name="categoryname")
+	@Column(nullable=false)
 	private String categoryName;
-	@Column(name="categorytype")
+	@Column(nullable=false,unique=true)
 	private String categoryType;
-	@Column(name="categorydesc")
 	private String categoryDesc;
-	@Column(name="status")
+	@Column(nullable=false)
 	private int status;
-	@Column(name="createdon")
+	@Column(nullable=false)
 	private Date createdOn;
-	@Column(name="modifiedon")
+	@Column(nullable=false)
 	private Date modifiedOn;
-	@Column(name="navigateto")
+	@Column(nullable=false)
 	private String navigateTo;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="category", fetch=FetchType.LAZY)
 	private Set<Product> productList;
 	
-	private Category() {
+	public Category() {
 		
 	}
 	

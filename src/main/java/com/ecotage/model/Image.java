@@ -21,11 +21,16 @@ public class Image {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)	
 	private Long imageId;
+	@Column(nullable=false)
 	private String imageUrl;
 	private String imageType;
+	@Column(nullable=false)
 	private int status;
+	@Column(nullable=false)
 	private Date createdOn;
+	@Column(nullable=false)
 	private Date modifiedOn;
+	private String imageSource;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prod_id")
@@ -35,13 +40,14 @@ public class Image {
 		
 	}
 	
-	public Image(String imageUrl, String imageType, int status, Date createdOn, Date modifiedOn) {
+	public Image(String imageUrl, String imageType, int status, Date createdOn, Date modifiedOn,Product product) {
 		super();
 		this.imageUrl = imageUrl;
 		this.imageType = imageType;
 		this.status = status;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.product = product;
 	}
 	
 	public Long getImageId() {
@@ -86,6 +92,15 @@ public class Image {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	public String getImageSource() {
+		return imageSource;
+	}
+
+	public void setImageSource(String imageSource) {
+		this.imageSource = imageSource;
+	}
+	
 	
 	
 		

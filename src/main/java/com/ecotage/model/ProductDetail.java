@@ -28,9 +28,7 @@ public class ProductDetail {
 	private String description;
 	
 	private String specificaton;
-	@Column(name="createdon")
 	private Date createdOn;
-	@Column(name="modifiedon")
 	private Date modifiedOn;
 	
 	@OneToOne(fetch=FetchType.LAZY)
@@ -40,14 +38,16 @@ public class ProductDetail {
 
 	
 	
-	
-
-	public ProductDetail(String description, String specificaton, Date createdOn, Date modifiedOn) {
+	public ProductDetail() {
+		
+	}
+	public ProductDetail(String description, String specificaton, Date createdOn, Date modifiedOn, Product product) {
 		super();
 		this.description = description;
 		this.specificaton = specificaton;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.product = product;
 	}
 
 
