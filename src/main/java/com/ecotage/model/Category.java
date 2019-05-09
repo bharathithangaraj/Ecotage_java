@@ -48,6 +48,7 @@ public class Category implements Serializable {
 	private String navigateTo;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="category", fetch=FetchType.LAZY)
+	@JsonManagedReference
 	private Set<Product> productList;
 	
 	public Category() {

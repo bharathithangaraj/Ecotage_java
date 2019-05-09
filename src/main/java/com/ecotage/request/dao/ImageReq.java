@@ -4,7 +4,7 @@ public class ImageReq {
 	
 	private String imageType;
 	private String imageUrl;
-	private int imgStatus;
+	private int imgStatus = 1;
 	
 	public String getImageType() {
 		return imageType;

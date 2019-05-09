@@ -5,7 +5,7 @@ public class OfferReq {
 	private int percentage;
 	private String offerCode;
 	private String offerDetail;
-	private int offerStatus;
+	private int offerStatus = 1;
 	
 	public int getPercentage() {
 		return percentage;

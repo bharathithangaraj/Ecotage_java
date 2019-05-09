@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ecotage.response.dao.ProductRes;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,7 +34,7 @@ public class Product {
 	@Column(name="prod_id")
 	private Long productId;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private String productName;
 	private String title;
 	@Column(nullable=false)
@@ -48,20 +49,21 @@ public class Product {
 	private Date modifiedOn;
 	
 	
-
-
 	@OneToOne(cascade=CascadeType.ALL,mappedBy="product",fetch=FetchType.LAZY)
-	//@JsonManagedReference
+	@JsonManagedReference
 	private ProductDetail productDetail;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="product",fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private Set<Offer> offer;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="product", fetch = FetchType.LAZY)	
+	@JsonManagedReference
 	private Set<Image> imageList;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cat_id") // alter the table with column name of category_id
+	@JsonBackReference
 	private Category category;
 	
 	

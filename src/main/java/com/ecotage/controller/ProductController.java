@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,14 @@ import com.ecotage.model.Category;
 import com.ecotage.model.Product;
 import com.ecotage.repo.CategoryRepository;
 import com.ecotage.request.dao.CategoryReq;
+import com.ecotage.request.dao.ProductReq;
 import com.ecotage.response.dao.CategoryRes;
 import com.ecotage.response.dao.ProductRes;
 import com.ecotage.response.dao.ResponseMessage;
 import com.ecotage.service.ProductService;
 
 @RestController
+@CrossOrigin("*")
 public class ProductController {
 
 
@@ -63,9 +66,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="/showAllProducts/{categoryName}", method = RequestMethod.GET)
-	public List<ProductRes> getAllProducts(@PathVariable("categoryName") String name) throws ResourceNotFoundException, ProductServiceException{
+	public List<CategoryRes> getAllProducts(@PathVariable("categoryName") String name) throws ResourceNotFoundException, ProductServiceException{
 		
-		List<ProductRes> prodList = null;
+		List<CategoryRes> prodList = null;
 		try {
 			
 			prodList = productService.getProductByCategoryName(name);
@@ -80,25 +83,34 @@ public class ProductController {
 	}
 
 	@RequestMapping(value="/addProducts", method = RequestMethod.POST)
-	public Product addProducts(@RequestBody Product product){
+	public ResponseMessage addProducts(@RequestBody LinkedList<ProductReq> prodReqList) throws ResourceNotFoundException, ProductServiceException{
+		
+		ResponseMessage res = null;
+		try {
+			res = productService.addProduct(prodReqList);
+			
+		} catch(ProductServiceException px) {
+			throw new ProductServiceException("Internal Server Exception while add category");
+		}
+		return  res;
 
-		return productService.addProduct(product);
+		//return productService.addProduct(product);
 
 	}
 
 	@RequestMapping(value="/showProduct/{productId}", method = RequestMethod.GET)
-	public Optional<Product> getProduct(@PathVariable("productId") Long id) throws ResourceNotFoundException, ProductServiceException
+	public ProductRes getProduct(@PathVariable("productId") Long id) throws ResourceNotFoundException, ProductServiceException
 	{
-		Optional<Product> prod = null;
+		ProductRes prod = null;
 		try {
 			
 			prod = productService.getProduct(id);
-			if(prod == null || !prod.isPresent()) {
+			if(prod == null ) {
 				throw new ResourceNotFoundException("Product Not Found");
 			}
 
 		} catch (ProductServiceException px){
-			throw new ProductServiceException("Internal Server Exception while getting product");
+			throw px;
 		}
 
 		return prod;
@@ -106,10 +118,19 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/showCategory/{categoryId}", method = RequestMethod.GET)
-	public List<Product> getProductByCategory(@PathVariable("categoryId") Long categoryId){
+	public List<CategoryRes> getProductByCategoryId(@PathVariable("categoryId") Long categoryId) throws ResourceNotFoundException, ProductServiceException{
 		
-		
-		return productService.getProductByCategories(categoryId); 
+		List<CategoryRes> prodList = null;
+		try {
+			
+			prodList = productService.getProductByCategories(categoryId);
+			if(prodList == null) {
+				throw new ResourceNotFoundException("Product Not Found");
+			}
+		} catch (ProductServiceException px){
+		throw new ProductServiceException("Internal Server Exception while getting product");
+		}
+		return prodList; 
 		
 
 	}

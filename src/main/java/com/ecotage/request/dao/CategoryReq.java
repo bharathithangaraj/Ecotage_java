@@ -10,12 +10,12 @@ public class CategoryReq {
 	private String categoryName;
 	private String categoryType;
 	private String cateUrl;
-	private int cateStaus;
+	private int cateStaus = 1;
 	private String prodUrl;
 	private double price;
 	private String productName;
 	private int quantity;
-	private int prodStatus;
+	private int prodStatus = 1;
 	private String title;
 	private String description;
 	private String specification;

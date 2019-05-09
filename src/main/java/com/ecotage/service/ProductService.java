@@ -12,6 +12,7 @@ import com.ecotage.model.CartDetail;
 import com.ecotage.model.Category;
 import com.ecotage.model.Product;
 import com.ecotage.request.dao.CategoryReq;
+import com.ecotage.request.dao.ProductReq;
 import com.ecotage.response.dao.CategoryRes;
 import com.ecotage.response.dao.ProductRes;
 import com.ecotage.response.dao.ResponseMessage;
@@ -25,14 +26,14 @@ public interface ProductService {
 	
 	public List<Product> getAllProducts();
 	
-	public Product addProduct(Product product);
+	public ResponseMessage addProduct(LinkedList<ProductReq> prodReqList) throws ProductServiceException;
 	
-	public Optional<Product> getProduct(Long id) throws ProductServiceException;
+	public ProductRes getProduct(Long id) throws ProductServiceException;
 	
-	public List<ProductRes> getProductByCategoryName(String name) throws ProductServiceException;
+	public List<CategoryRes> getProductByCategoryName(String name) throws ProductServiceException;
 	
 	
-	public List<Product> getProductByCategories(Long id);
+	public List<CategoryRes> getProductByCategories(Long id)  throws ProductServiceException;
 	
 	
 	

@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 //@Table(name="image")
 public class Image {
@@ -21,7 +23,7 @@ public class Image {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)	
 	private Long imageId;
-	@Column(nullable=false)
+	@Column(nullable=false,unique=true)
 	private String imageUrl;
 	private String imageType;
 	@Column(nullable=false)
@@ -34,6 +36,7 @@ public class Image {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prod_id")
+	@JsonBackReference
 	private Product product;
 	
 	public Image() {

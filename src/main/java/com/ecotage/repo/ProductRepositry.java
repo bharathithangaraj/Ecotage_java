@@ -15,6 +15,8 @@ public interface ProductRepositry extends JpaRepository<Product, Long> {
 //	
 	@Query(value="select * from product where cat_id = ?", nativeQuery=true)
 	List<Product> findProductByCategory(Long categoryId);
+	
+	Optional<Product> findByProductName(String name);
 
 	//Optional<Product> findByCategoryList(Long id);
 
