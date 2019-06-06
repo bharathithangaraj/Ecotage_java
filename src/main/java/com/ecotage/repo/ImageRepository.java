@@ -1,13 +1,14 @@
 package com.ecotage.repo;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.ecotage.model.Image;
 
-public interface ImageRepository extends JpaRepository<Image, Long> {
+@Repository
+public interface ImageRepository extends JpaRepository<Image, Long>{
 	
-	Optional<Image> findByImageUrl(String imageUrl);
-
+	List<Image> findByProductId(Long productId);
 }

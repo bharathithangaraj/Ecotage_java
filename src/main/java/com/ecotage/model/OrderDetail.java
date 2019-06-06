@@ -1,83 +1,125 @@
 package com.ecotage.model;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "order_detail")
 public class OrderDetail {
-	
+
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="order_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_id")
 	private Long orderId;
-//	private Long productId;
+	private Long productId;
 	private Double total;
 	private int quantity;
-//	private Long offerId;
-//	private Long userId;
+	private Long offerId;
+	private Long userId;
 	private int status;
 	private Date createdOn;
 	private Date modifiedOn;
 	
-	@OneToMany(mappedBy="orderDetail")
-	private List<CheckoutProduct> checkoutProducts;
 	
 
+	public OrderDetail(Long productId, Double total, int quantity, Long offerId, Long userId, int status,
+			Date createdOn, Date modifiedOn) {
+		super();
+		this.orderId = orderId;
+		this.productId = productId;
+		this.total = total;
+		this.quantity = quantity;
+		this.offerId = offerId;
+		this.userId = userId;
+		this.status = status;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+	}
 	
+	
+	public OrderDetail() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public Long getOrderId() {
 		return orderId;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
+
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+
+	public Long getProductId() {
+		return productId;
 	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+
 	public Double getTotal() {
 		return total;
 	}
+
 	public void setTotal(Double total) {
 		this.total = total;
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public List<CheckoutProduct> getCheckoutProducts() {
-		return checkoutProducts;
+
+	public Long getOfferId() {
+		return offerId;
 	}
-	public void setCheckoutProducts(List<CheckoutProduct> checkoutProducts) {
-		this.checkoutProducts = checkoutProducts;
+
+	public void setOfferId(Long offerId) {
+		this.offerId = offerId;
 	}
-	
-	
-	
-	
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
 }
