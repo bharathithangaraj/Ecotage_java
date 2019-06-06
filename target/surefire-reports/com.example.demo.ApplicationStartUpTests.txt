@@ -1,9 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.demo.ApplicationStartUpTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.351 s <<< FAILURE! - in com.example.demo.ApplicationStartUpTests
-contextLoads(com.example.demo.ApplicationStartUpTests)  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'applicationStartUpTests': Unsatisfied dependency expressed through field 'productRepo'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ecotage.repo.ProductRepositry' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ecotage.repo.ProductRepositry' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-
