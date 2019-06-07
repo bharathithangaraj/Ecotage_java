@@ -107,12 +107,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ResponseMessage addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
+	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
 		
-		ResponseMessage res = null;
+		List<ShowOrderDetails> showOrders = null;
 
 		try {
-			res = orderDetailDao.addOrders(orderList);
+			showOrders = orderDetailDao.addOrders(orderList);
 
 			//log.info(orderList);
 
@@ -121,7 +121,7 @@ public class PaymentServiceImpl implements PaymentService {
 			throw new ProductServiceException("Unable to find categories");
 		}
 
-		return res;
+		return showOrders;
 		
 	}
 

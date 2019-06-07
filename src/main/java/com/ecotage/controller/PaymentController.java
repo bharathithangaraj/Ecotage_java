@@ -64,7 +64,7 @@ public class PaymentController {
 	
 	//Order Services
 	@PostMapping(value = "/order/new/")
-	public ResponseMessage addOrders(@RequestBody LinkedList<AddOrders> orderList)
+	public List<ShowOrderDetails> addOrders(@RequestBody LinkedList<AddOrders> orderList)
 			throws ResourceNotFoundException, ProductServiceException {
 
 		return paymentHandler.addOrders(orderList);

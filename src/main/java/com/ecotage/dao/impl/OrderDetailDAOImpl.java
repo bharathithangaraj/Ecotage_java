@@ -46,12 +46,13 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 	CartDetailRepository cartRepo;
 
 	@Override
-	public ResponseMessage addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
-		ResponseMessage res = new ResponseMessage();
+	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
+		List<ShowOrderDetails> showOrders = new ArrayList<>();
 
 		for (AddOrders orderItem : orderList) {
 
 			try {
+				ShowOrderDetails addedOrder = new ShowOrderDetails();
 
 				Optional<Product> productEntity = productRepo.findByProductId(orderItem.getProductId());
 
@@ -61,26 +62,56 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 					throw new ProductServiceException("Selected User/ Product Not available");
 
 				}
+				
+				if (productEntity.get().getQuantity() < orderItem.getQuantity()) {
+					throw new ProductServiceException(
+							"No stockes available for the selected Quantity :" + productEntity.get().getQuantity());
+				}
+				
+				Product prod = productEntity.get();
+				prod.setModifiedOn(CURRENT_TIME);
+				prod.setQuantity(prod.getQuantity() - orderItem.getQuantity());
+
+				productRepo.save(prod);
 
 				OrderDetail orderEntity = new OrderDetail(orderItem.getProductId(), orderItem.getTotal(),
 						orderItem.getQuantity(), orderItem.getOfferId(), orderItem.getUserId(), orderItem.getStatus(),
 						CURRENT_TIME, CURRENT_TIME);
 
-				orderRepo.save(orderEntity);
+				OrderDetail newOrder = orderRepo.save(orderEntity);
+				
+				//addedOrder.setImageUrl(newOrder.get);
+				addedOrder.setOfferId(newOrder.getOfferId());
+				addedOrder.setOrderId(newOrder.getOrderId());
+				
+				addedOrder.setProductId(newOrder.getProductId());
+				addedOrder.setQuantity(newOrder.getQuantity());
+				addedOrder.setTotal(newOrder.getTotal());
+				addedOrder.setUserId(newOrder.getUserId());
+				
+				Optional<Product> newProduct = productRepo.findByProductId(newOrder.getProductId());
 
+				if (newProduct.isPresent()) {
+					Products product = new Products();
+					product.setNavigageTo(newProduct.get().getNavigageTo());
+					product.setProductName(newProduct.get().getProductName());
+					product.setTitle(newProduct.get().getTitle());
+					product.setImageUrl(newProduct.get().getImageUrl());
+					product.setQuantity(newProduct.get().getQuantity());
+					addedOrder.setProduct(product);
+				}
+				
+				showOrders.add(addedOrder);
+				
 				Optional<CartDetail> cartEntity = cartRepo.findById(orderItem.getCartId());
 				
 				cartRepo.delete(cartEntity.get());
 
-				res.setMessage("success");
-				res.setErrorCode("0000");
-
 			} catch (Exception e) {
-				res.setMessage(e.getMessage());
-				res.setErrorCode("E001");
+				
 			}
 		}
-		return res;
+		return showOrders;
 
 	}
 

@@ -77,17 +77,17 @@ public class PaymentHandler {
 		return showCarts;
 	}
 
-	public ResponseMessage addOrders(@RequestBody LinkedList<AddOrders> orderList)
+	public List<ShowOrderDetails> addOrders(@RequestBody LinkedList<AddOrders> orderList)
 			throws ResourceNotFoundException, ProductServiceException {
 
-		ResponseMessage res = null;
+		List<ShowOrderDetails> showOrders = null;
 		try {
-			res = paymentService.addOrders(orderList);
+			showOrders = paymentService.addOrders(orderList);
 
 		} catch (ProductServiceException px) {
 			throw new ProductServiceException("Internal Server Exception while add category");
 		}
-		return res;
+		return showOrders;
 
 	}
 

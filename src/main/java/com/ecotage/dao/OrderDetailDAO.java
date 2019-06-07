@@ -13,7 +13,7 @@ import com.ecotage.vo.ShowOrderDetails;
 @Service
 public interface OrderDetailDAO {
 	
-	public ResponseMessage addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException;
+	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException;
 	
 	public List<ShowOrderDetails> getOrders(Long userId) throws ProductServiceException;
 	
