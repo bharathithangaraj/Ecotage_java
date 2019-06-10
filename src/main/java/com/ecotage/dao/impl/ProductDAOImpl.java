@@ -94,7 +94,7 @@ public class ProductDAOImpl implements ProductDAO {
 		productRes.setProductName(productItem.getProductName());
 		productRes.setStatus(productItem.getStatus());
 		productRes.setTitle(productItem.getTitle());
-
+		productRes.setQuantity(productItem.getQuantity());
 		return productRes;
 
 	}

@@ -10,6 +10,7 @@ public class ShowOrderDetails {
 	private Long userId;
 	private int status;
 	private String imageUrl;
+	private String categoryName;
 
 	private Products product;
 
@@ -84,6 +85,16 @@ public class ShowOrderDetails {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	
+	
 	
 	
 

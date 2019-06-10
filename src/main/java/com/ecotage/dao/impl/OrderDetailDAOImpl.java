@@ -14,11 +14,13 @@ import com.ecotage.dao.OrderDetailDAO;
 import com.ecotage.exception.ProductServiceException;
 import com.ecotage.model.CancelOrder;
 import com.ecotage.model.CartDetail;
+import com.ecotage.model.Category;
 import com.ecotage.model.OrderDetail;
 import com.ecotage.model.Product;
 import com.ecotage.model.User;
 import com.ecotage.repo.CancelOrderRepository;
 import com.ecotage.repo.CartDetailRepository;
+import com.ecotage.repo.CategoryRepository;
 import com.ecotage.repo.OrderDetailRepository;
 import com.ecotage.repo.ProductRepository;
 import com.ecotage.repo.UserRepository;
@@ -44,6 +46,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
 	@Autowired
 	CartDetailRepository cartRepo;
+	
+	@Autowired
+	CategoryRepository cateRepo;
 
 	@Override
 	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
@@ -80,7 +85,6 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
 				OrderDetail newOrder = orderRepo.save(orderEntity);
 				
-				//addedOrder.setImageUrl(newOrder.get);
 				addedOrder.setOfferId(newOrder.getOfferId());
 				addedOrder.setOrderId(newOrder.getOrderId());
 				
@@ -88,6 +92,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 				addedOrder.setQuantity(newOrder.getQuantity());
 				addedOrder.setTotal(newOrder.getTotal());
 				addedOrder.setUserId(newOrder.getUserId());
+				
 				
 				Optional<Product> newProduct = productRepo.findByProductId(newOrder.getProductId());
 
@@ -98,6 +103,15 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 					product.setTitle(newProduct.get().getTitle());
 					product.setImageUrl(newProduct.get().getImageUrl());
 					product.setQuantity(newProduct.get().getQuantity());
+					product.setPrice(newProduct.get().getPrice());
+					addedOrder.setImageUrl(newProduct.get().getImageUrl());
+					
+					Optional<Category> category = cateRepo.findById(newProduct.get().getCategoryId());
+					
+					if(category.isPresent()) {
+						addedOrder.setCategoryName(category.get().getCategoryName());
+					}
+					
 					addedOrder.setProduct(product);
 				}
 				
@@ -129,9 +143,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 				ShowOrderDetails showOrders = new ShowOrderDetails();
 				showOrders.setOfferId(orderItem.getOfferId());
 				showOrders.setOrderId(orderItem.getOrderId());
+				
 				showOrders.setProductId(orderItem.getProductId());
 				showOrders.setQuantity(orderItem.getQuantity());
-				showOrders.setStatus(orderItem.getStatus());
 				showOrders.setTotal(orderItem.getTotal());
 				showOrders.setUserId(orderItem.getUserId());
 
@@ -140,12 +154,19 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 				if (productEntity.isPresent()) {
 					
 					Products product = new Products();
-					product.setProductId(productEntity.get().getProductId());
-					product.setPrice(productEntity.get().getPrice());
 					product.setNavigageTo(productEntity.get().getNavigageTo());
 					product.setProductName(productEntity.get().getProductName());
 					product.setTitle(productEntity.get().getTitle());
 					product.setImageUrl(productEntity.get().getImageUrl());
+					product.setQuantity(productEntity.get().getQuantity());
+					product.setPrice(productEntity.get().getPrice());
+					showOrders.setImageUrl(productEntity.get().getImageUrl());
+					
+					Optional<Category> category = cateRepo.findById(productEntity.get().getCategoryId());
+					
+					if(category.isPresent()) {
+						showOrders.setCategoryName(category.get().getCategoryName());
+					}
 					
 					showOrders.setProduct(product);
 				}
