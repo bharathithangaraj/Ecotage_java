@@ -24,7 +24,7 @@ public interface PaymentService {
 	
 	public List<ShowCartDetails> getCarts(Long userId) throws ProductServiceException;
 	
-	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException;
+	public ShowOrderDetails addOrders(AddOrders orderList) throws ProductServiceException;
 	
 	public List<ShowOrderDetails> getOrders(Long userId) throws ProductServiceException;
 	

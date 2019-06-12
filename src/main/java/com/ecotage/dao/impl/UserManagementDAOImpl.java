@@ -3,6 +3,8 @@ package com.ecotage.dao.impl;
 import static com.ecotage.util.CommonUtil.CURRENT_TIME;
 import static com.ecotage.util.CommonUtil.VALID_EMAIL_ADDRESS_REGEX;
 import static com.ecotage.util.CommonUtil.VALID_PHONE_NO;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
@@ -13,16 +15,22 @@ import com.ecotage.dao.UserManagementDAO;
 import com.ecotage.exception.ResourceNotFoundException;
 import com.ecotage.exception.UserManagementException;
 import com.ecotage.model.User;
+import com.ecotage.model.UserDetail;
+import com.ecotage.repo.UserDetailsRepository;
 import com.ecotage.repo.UserRepository;
 import com.ecotage.vo.AddUser;
 import com.ecotage.vo.ResponseMessage;
 import com.ecotage.vo.ShowUser;
+import com.ecotage.vo.ShowUserDetails;
 
 @Component
 public class UserManagementDAOImpl implements UserManagementDAO {
 
 	@Autowired
 	UserRepository userRepo;
+	
+	@Autowired
+	UserDetailsRepository userDetRepo;
 
 	@Override
 	public ShowUser createUser(AddUser userDetail) throws UserManagementException {
@@ -92,6 +100,73 @@ public class UserManagementDAOImpl implements UserManagementDAO {
 			
 		}
 		return addedUser;
+	}
+
+	@Override
+	public ShowUser getUser(String loginId) throws UserManagementException {
+		
+		ShowUser showUser = null;
+		ResponseMessage res = null;
+		
+		try {
+			res = new ResponseMessage();
+			
+			Optional<User> userEntity = userRepo.findByLoginId(loginId);
+			
+			if(userEntity.isPresent()) {
+				showUser = new ShowUser();
+				
+				showUser.setEmail(userEntity.get().getEmail());
+				showUser.setFirstName(userEntity.get().getFirstName());
+				showUser.setIsActive(userEntity.get().getIsActive());
+				showUser.setIsEmailVerified(userEntity.get().getIsEmailVerified());
+				showUser.setIsGuest(userEntity.get().getIsGuest());
+				showUser.setMobileNumber(userEntity.get().getMobileNumber());
+				showUser.setUserId(userEntity.get().getUserId());
+				showUser.setLastName(userEntity.get().getLastName());
+				showUser.setLoginId(userEntity.get().getLoginId());
+				
+				
+				List<UserDetail> userDetailEntity = userDetRepo.findByUserId(userEntity.get().getUserId());
+				
+				
+				for(UserDetail userDetail : userDetailEntity) {
+					
+					if(userDetail.getIsPrimaryAddress() == 1) {
+						ShowUserDetails showUserDtls = new ShowUserDetails();
+						
+						showUserDtls.setAddress1(userDetail.getAddress1());
+						showUserDtls.setAddress2(userDetail.getAddress2());
+						//showUserDtls.setAddressType(userDetail.getAddressType().name());
+						showUserDtls.setCity(userDetail.getCity());
+						//showUserDtls.setGender(userDetail.getGender().name());
+						showUserDtls.setHouseNo(userDetail.getHouseNo());
+						showUserDtls.setLandMark(userDetail.getLandMark());
+						showUserDtls.setLocation(userDetail.getLocation());
+						showUserDtls.setState(userDetail.getState());
+						showUserDtls.setZip(userDetail.getPincode());
+						showUser.setShowUserDetails(showUserDtls);
+					}
+					
+				}
+				
+				res.setErrorCode("0000");
+				res.setMessage("success");
+				
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			 res.setErrorCode("E001");
+			 res.setMessage(ex.getMessage());
+			 showUser.setResponse(res);
+			throw new UserManagementException("Unable to add User " + ex.getMessage());
+			
+		}
+		return showUser;
+		
+		
+		
 	}
 
 }

@@ -61,9 +61,11 @@ public class User {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getUserId() {
-		return encryptFromId(userId);
-	}
+//	public String getUserId() {
+//		return encryptFromId(userId);
+//	}
+	
+	
 
 	public String getLoginId() {
 		return loginId;
@@ -116,6 +118,11 @@ public class User {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	
+
+	public Long getUserId() {
+		return userId;
 	}
 
 	public void setLoginId(String loginId) {

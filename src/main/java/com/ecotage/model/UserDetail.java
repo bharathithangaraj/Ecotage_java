@@ -37,7 +37,7 @@ public class UserDetail {
 	private String landMark;
 	@Enumerated(EnumType.STRING)
 	private AddressType addressType;
-	private Boolean isPrimaryAddress;
+	private int isPrimaryAddress;
 	private Date createdOn;
 	private Date modifiedOn;
 
@@ -52,7 +52,7 @@ public class UserDetail {
 
 	public UserDetail(Long userDetailId, String name, Gender gender, String location, String houseNo, String address1,
 			String address2, String mobileNo, String city, String state, int pincode, String landMark,
-			AddressType addressType, Boolean isPrimaryAddress, Date createdOn, Date modifiedOn, Long userId) {
+			AddressType addressType, int isPrimaryAddress, Date createdOn, Date modifiedOn, Long userId) {
 		super();
 		this.userDetailId = userDetailId;
 		this.name = name;
@@ -127,10 +127,7 @@ public class UserDetail {
 		return addressType;
 	}
 
-	public Boolean getIsPrimaryAddress() {
-		return isPrimaryAddress;
-	}
-
+	
 	public Date getCreatedOn() {
 		return createdOn;
 	}
@@ -191,10 +188,7 @@ public class UserDetail {
 		this.addressType = addressType;
 	}
 
-	public void setIsPrimaryAddress(Boolean isPrimaryAddress) {
-		this.isPrimaryAddress = isPrimaryAddress;
-	}
-
+	
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
@@ -210,5 +204,19 @@ public class UserDetail {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+
+
+	public int getIsPrimaryAddress() {
+		return isPrimaryAddress;
+	}
+
+
+
+	public void setIsPrimaryAddress(int isPrimaryAddress) {
+		this.isPrimaryAddress = isPrimaryAddress;
+	}
+	
+	
 
 }

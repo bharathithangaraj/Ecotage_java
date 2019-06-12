@@ -49,8 +49,89 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 	
 	@Autowired
 	CategoryRepository cateRepo;
-
+	
 	@Override
+	public ShowOrderDetails addOrders(AddOrders orderItem) throws ProductServiceException {
+		//List<ShowOrderDetails> showOrders = new ArrayList<>();
+
+		//for (AddOrders orderItem : orderList) {
+		
+		ShowOrderDetails addedOrder = null;
+
+			try {
+				 addedOrder = new ShowOrderDetails();
+
+				Optional<Product> productEntity = productRepo.findByProductId(orderItem.getProductId());
+
+				Optional<User> userEntity = userRepo.findById(orderItem.getUserId());
+
+				if (!productEntity.isPresent() || !userEntity.isPresent()) {
+					throw new ProductServiceException("Selected User/ Product Not available");
+
+				}
+				
+				if (productEntity.get().getQuantity() < orderItem.getQuantity()) {
+					throw new ProductServiceException(
+							"No stockes available for the selected Quantity :" + productEntity.get().getQuantity());
+				}
+				
+				Product prod = productEntity.get();
+				prod.setModifiedOn(CURRENT_TIME);
+				prod.setQuantity(prod.getQuantity() - orderItem.getQuantity());
+
+				productRepo.save(prod);
+
+				OrderDetail orderEntity = new OrderDetail(orderItem.getProductId(), orderItem.getTotal(),
+						orderItem.getQuantity(), orderItem.getOfferId(), orderItem.getUserId(), orderItem.getStatus(),
+						CURRENT_TIME, CURRENT_TIME);
+
+				OrderDetail newOrder = orderRepo.save(orderEntity);
+				
+				addedOrder.setOfferId(newOrder.getOfferId());
+				addedOrder.setOrderId(newOrder.getOrderId());
+				
+				addedOrder.setProductId(newOrder.getProductId());
+				addedOrder.setQuantity(newOrder.getQuantity());
+				addedOrder.setTotal(newOrder.getTotal());
+				addedOrder.setUserId(newOrder.getUserId());
+				
+				
+				Optional<Product> newProduct = productRepo.findByProductId(newOrder.getProductId());
+
+				if (newProduct.isPresent()) {
+					Products product = new Products();
+					product.setNavigageTo(newProduct.get().getNavigageTo());
+					product.setProductName(newProduct.get().getProductName());
+					product.setTitle(newProduct.get().getTitle());
+					product.setImageUrl(newProduct.get().getImageUrl());
+					product.setQuantity(newProduct.get().getQuantity());
+					product.setPrice(newProduct.get().getPrice());
+					addedOrder.setImageUrl(newProduct.get().getImageUrl());
+					
+					Optional<Category> category = cateRepo.findById(newProduct.get().getCategoryId());
+					
+					if(category.isPresent()) {
+						addedOrder.setCategoryName(category.get().getCategoryName());
+					}
+					
+					addedOrder.setProduct(product);
+				}
+				
+				//showOrders.add(addedOrder);
+				
+				Optional<CartDetail> cartEntity = cartRepo.findById(orderItem.getCartId());
+				
+				cartRepo.delete(cartEntity.get());
+
+			} catch (Exception e) {
+				
+			}
+		//}
+		return addedOrder;
+
+	}
+
+	/*@Override
 	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
 		List<ShowOrderDetails> showOrders = new ArrayList<>();
 
@@ -127,7 +208,7 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 		}
 		return showOrders;
 
-	}
+	}*/
 
 	@Override
 	public List<ShowOrderDetails> getOrders(Long userId) throws ProductServiceException {

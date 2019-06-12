@@ -77,7 +77,22 @@ public class PaymentHandler {
 		return showCarts;
 	}
 
-	public List<ShowOrderDetails> addOrders(@RequestBody LinkedList<AddOrders> orderList)
+	public ShowOrderDetails addOrders(@RequestBody AddOrders order)
+			throws ResourceNotFoundException, ProductServiceException {
+
+		ShowOrderDetails showOrders = null;
+		try {
+			showOrders = paymentService.addOrders(order);
+
+		} catch (ProductServiceException px) {
+			throw new ProductServiceException("Internal Server Exception while add category");
+		}
+		return showOrders;
+
+	}
+	
+	
+	/*public List<ShowOrderDetails> addOrders(@RequestBody LinkedList<AddOrders> orderList)
 			throws ResourceNotFoundException, ProductServiceException {
 
 		List<ShowOrderDetails> showOrders = null;
@@ -89,7 +104,7 @@ public class PaymentHandler {
 		}
 		return showOrders;
 
-	}
+	}*/
 
 	public List<ShowOrderDetails> getOrders(@PathVariable("userId") Long userId)
 			throws ResourceNotFoundException, ProductServiceException {

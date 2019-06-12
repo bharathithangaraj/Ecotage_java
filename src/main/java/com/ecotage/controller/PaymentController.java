@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,11 +65,24 @@ public class PaymentController {
 	
 	//Order Services
 	@PostMapping(value = "/order/new/")
-	public List<ShowOrderDetails> addOrders(@RequestBody LinkedList<AddOrders> orderList)
+	public ResponseEntity<ShowOrderDetails> addOrders(@RequestBody AddOrders orderList)
 			throws ResourceNotFoundException, ProductServiceException {
 
-		return paymentHandler.addOrders(orderList);
+		//return paymentHandler.addOrders(orderList);
+		
+		return ResponseEntity.status(200).body(paymentHandler.addOrders(orderList));
 	}
+	
+	/*@PostMapping(value = "/order/new/")
+	public ResponseEntity<List<ShowOrderDetails>> addOrders(@RequestBody LinkedList<AddOrders> orderList)
+			throws ResourceNotFoundException, ProductServiceException {
+
+		//return paymentHandler.addOrders(orderList);
+		
+		return ResponseEntity.status(200).body(paymentHandler.addOrders(orderList));
+	}*/
+	
+	
 	
 	@GetMapping(value = "/order/products/{userId}")
 	public List<ShowOrderDetails> getOrders(@PathVariable("userId") Long userId)

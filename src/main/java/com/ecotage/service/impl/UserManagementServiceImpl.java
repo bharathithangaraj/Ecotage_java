@@ -33,4 +33,17 @@ public class UserManagementServiceImpl implements UserManagementService {
 		return addedUser;
 	}
 
+	@Override
+	public ShowUser getUser(String loginId) throws ResourceNotFoundException, UserManagementException {
+		
+		ShowUser addedUser;
+		try {
+			addedUser = userDao.getUser(loginId);
+			log.info("add User datail",loginId);
+		} catch(Exception ex) {
+			throw new UserManagementException("Unable to add User");
+		}
+		return addedUser;
+	}
+
 }

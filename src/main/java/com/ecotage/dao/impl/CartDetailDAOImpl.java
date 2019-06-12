@@ -83,9 +83,6 @@ public class CartDetailDAOImpl implements CartDetailDAO {
 				addedCarts.setProduct(product);
 			}
 
-			
-
-			
 			// }
 
 		} catch (Exception e) {

@@ -107,6 +107,26 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
+	public ShowOrderDetails addOrders(AddOrders orders) throws ProductServiceException {
+		
+		ShowOrderDetails showOrders = null;
+
+		try {
+			showOrders = orderDetailDao.addOrders(orders);
+
+			//log.info(orderList);
+
+		} catch (Exception px) {
+
+			throw new ProductServiceException("Unable to find categories");
+		}
+
+		return showOrders;
+		
+	}
+	
+	
+	/*@Override
 	public List<ShowOrderDetails> addOrders(LinkedList<AddOrders> orderList) throws ProductServiceException {
 		
 		List<ShowOrderDetails> showOrders = null;
@@ -123,7 +143,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 		return showOrders;
 		
-	}
+	}*/
 
 	@Override
 	public List<ShowOrderDetails> getOrders(Long userId) throws ProductServiceException {

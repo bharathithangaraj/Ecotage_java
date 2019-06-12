@@ -11,5 +11,7 @@ import com.ecotage.vo.ShowUser;
 public interface UserManagementService {
 	
 	public ShowUser createUser(AddUser userDetail) throws ResourceNotFoundException, UserManagementException;
+	
+	public ShowUser getUser(String loginId) throws ResourceNotFoundException, UserManagementException;
 
 }

@@ -4,12 +4,14 @@ public class ShowUser {
 
 	private Long userId;
 	private String firstName;
+	private String lastName;
 	private String mobileNumber;
 	private String email;
 	private int isActive;
 	private int isEmailVerified;
 	private int isGuest;
 	private String loginId;
+	private ShowUserDetails showUserDetails;
 
 	private ResponseMessage response;
 	
@@ -19,6 +21,15 @@ public class ShowUser {
 
 	public void setResponse(ResponseMessage response) {
 		this.response = response;
+	}
+	
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getLoginId() {
@@ -84,5 +95,15 @@ public class ShowUser {
 	public void setIsGuest(int isGuest) {
 		this.isGuest = isGuest;
 	}
+
+	public ShowUserDetails getShowUserDetails() {
+		return showUserDetails;
+	}
+
+	public void setShowUserDetails(ShowUserDetails showUserDetails) {
+		this.showUserDetails = showUserDetails;
+	}
+	
+	
 
 }

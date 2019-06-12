@@ -2,6 +2,8 @@ package com.ecotage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,7 @@ import com.ecotage.vo.AddCartDetails;
 import com.ecotage.vo.AddUser;
 import com.ecotage.vo.ShowUser;
 
-@RestController("/login")
+@RestController()
 @CrossOrigin("*")
 public class UserManagementController {
 	
@@ -53,5 +55,12 @@ public class UserManagementController {
 	@RequestMapping(value = "/OTP/verify", method = RequestMethod.POST)
 	public void verifyOTP() {
 
+	}
+	
+	@GetMapping(value = "/Users/{loginId}")
+	public ShowUser getUser(@PathVariable("loginId") String loginId) throws ResourceNotFoundException, UserManagementException{
+		
+		return userHandler.getUser(loginId);
+		
 	}
 }
