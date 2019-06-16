@@ -1,6 +1,6 @@
 package com.ecotage.exception;
 
-public class UserManagementException extends Exception {
+public class UserManagementException extends RuntimeException {
 
 	public UserManagementException() {
 		super();

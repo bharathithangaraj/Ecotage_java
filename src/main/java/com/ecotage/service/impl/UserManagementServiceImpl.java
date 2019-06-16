@@ -10,6 +10,7 @@ import com.ecotage.exception.ResourceNotFoundException;
 import com.ecotage.exception.UserManagementException;
 import com.ecotage.service.UserManagementService;
 import com.ecotage.vo.AddUser;
+import com.ecotage.vo.AddUserDetails;
 import com.ecotage.vo.ShowUser;
 
 @Component
@@ -34,16 +35,44 @@ public class UserManagementServiceImpl implements UserManagementService {
 	}
 
 	@Override
-	public ShowUser getUser(String loginId) throws ResourceNotFoundException, UserManagementException {
+	public ShowUser getUserAdditionalInfo(String loginId, String access_token) throws ResourceNotFoundException, UserManagementException {
 		
 		ShowUser addedUser;
 		try {
-			addedUser = userDao.getUser(loginId);
+			addedUser = userDao.getUserAdditionalInfo(loginId, access_token);
 			log.info("add User datail",loginId);
 		} catch(Exception ex) {
 			throw new UserManagementException("Unable to add User");
 		}
 		return addedUser;
+	}
+
+	@Override
+	public ShowUser loginUser(String loginId, String password)
+			throws ResourceNotFoundException, UserManagementException {
+		
+		ShowUser addedUser;
+		try {
+			addedUser = userDao.loginUser(loginId,password);
+			log.info("add User datail",loginId);
+		} catch(Exception ex) {
+			throw new UserManagementException("Unable to add User");
+		}
+		return addedUser;
+	}
+
+	@Override
+	public ShowUser addUserDetails(AddUserDetails userDetail)
+			throws ResourceNotFoundException, UserManagementException {
+	
+		ShowUser addUserDetail;
+		try {
+			addUserDetail = userDao.addUserDetails(userDetail);
+			log.info("add User datail",userDetail);
+		} catch(Exception ex) {
+			throw new UserManagementException("Unable to add User");
+		}
+		return addUserDetail;
 	}
 
 }

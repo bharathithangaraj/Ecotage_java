@@ -86,6 +86,7 @@ public class CartDetailDAOImpl implements CartDetailDAO {
 			// }
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ProductServiceException("Unable to add cart details");
 
 		}

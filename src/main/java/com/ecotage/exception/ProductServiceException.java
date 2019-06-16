@@ -1,6 +1,6 @@
 package com.ecotage.exception;
 
-public class ProductServiceException extends Exception {
+public class ProductServiceException extends RuntimeException {
 	
 	public ProductServiceException() {
 		super();

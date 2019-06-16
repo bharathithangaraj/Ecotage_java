@@ -30,7 +30,6 @@ public class CartDetail {
 	public CartDetail( int quantity, Double price, Long userId, int status, Date createdOn, Date modifiedOn,
 			Long productId) {
 		super();
-		this.cartId = cartId;
 		this.quantity = quantity;
 		this.price = price;
 		this.userId = userId;

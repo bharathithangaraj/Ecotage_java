@@ -1,6 +1,6 @@
 package com.ecotage.vo;
 
-public class ShowUserDetails {
+public class AddUserDetails {
 	
 	private String state;
 	private String address1;
@@ -13,20 +13,29 @@ public class ShowUserDetails {
 	private String location;
 	private int pincode;
 	private String country;
+	private String token;
+	private String firstName;
+	private String lastName;
+	private Long userId;
 	
 	
-	
-	public int getPincode() {
-		return pincode;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setPincode(int pincode) {
-		this.pincode = pincode;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getCountry() {
-		return country;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public String getState() {
 		return state;
@@ -82,6 +91,25 @@ public class ShowUserDetails {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	public int getPincode() {
+		return pincode;
+	}
+	public void setPincode(int pincode) {
+		this.pincode = pincode;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 	
 	
 	
