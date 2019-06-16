@@ -75,7 +75,7 @@ public class UserManagementController {
 	}
 	
 	@PostMapping(value = "/UserDetails/add/")
-	public ShowUser addToCarts(@RequestBody AddUserDetails userdetails)
+	public ShowUser addUserDetails(@RequestBody AddUserDetails userdetails)
 			throws ResourceNotFoundException, ProductServiceException {
 
 		return userHandler.addUserDetails(userdetails);
