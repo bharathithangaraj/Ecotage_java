@@ -86,6 +86,20 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return product;
 	}
+	
+	@Override
+	public List<Products> getAllProductNames() throws ProductServiceException {
+		List<Products> products = null;
+
+		try {
+			products = productDao.getProductsName();
+
+		} catch (Exception px) {
+
+			throw new ProductServiceException("Unable to find categories");
+		}
+		return products;
+	}
 
 	/*
 	 * Logger log = LoggerFactory.getLogger(this.getClass().getName());

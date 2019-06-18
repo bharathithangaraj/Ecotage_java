@@ -21,6 +21,8 @@ public interface ProductService {
 	public List<Products> getProductsByCategory(Long categoryId) throws ProductServiceException;
 
 	public Products getProduct(Long productId) throws ProductServiceException;
+	
+	public List<Products> getAllProductNames() throws ProductServiceException;
 
 	/*
 	 * public ResponseMessage addCategory(LinkedList<CategoryReq> categories) throws

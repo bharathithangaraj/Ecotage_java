@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ecotage.model.Product;
 
@@ -15,5 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	List<Product> findByCategoryId(Long CategoryId);
 	
 	Optional<Product> findByProductId(Long productId);
+	
+	@Query(value="select productId,productName from Product where Status = 1")
+	List<Object[]> getProductsName();
 
 }

@@ -1,5 +1,6 @@
 package com.ecotage.handler;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,6 +97,20 @@ public class ProductHandler {
 		}
 	
 
+	}
+	
+	public List<Products> getAllProductNames()throws ResourceNotFoundException, ProductServiceException{
+		List<Products> products = new ArrayList<Products>();
+		try {
+			products = productService.getAllProductNames();
+			//products = product.stream().map(c -> mapper.map(c, Products.class)).collect(Collectors.toList());
+			if (products == null) {
+				throw new ResourceNotFoundException("Product Not Found");
+			}
+		}catch(ProductServiceException px) {
+			throw new ProductServiceException("Internal Server Exception while getting product names");
+		}
+		return products;
 	}
 	
 /*

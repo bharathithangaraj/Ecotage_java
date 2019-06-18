@@ -52,4 +52,10 @@ public class ProductController {
 
 	}
 	
+	@GetMapping(value="/products/names")
+	public List<Products> getAllProductNames() throws ResourceNotFoundException, ProductServiceException{
+		
+		return productHandler.getAllProductNames();
+	}
+	
 }

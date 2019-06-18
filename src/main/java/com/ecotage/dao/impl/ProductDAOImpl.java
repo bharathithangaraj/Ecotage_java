@@ -187,5 +187,23 @@ public class ProductDAOImpl implements ProductDAO {
 		
 		return productRes;
 	}
+	
+	@Override
+	public List<Products> getProductsName() throws ProductServiceException {
+		List<Products> productsNames = new ArrayList<Products>();
+		try {
+			 List<Object[]> results = productRepo.getProductsName();
+			for(Object[] obj : results) {
+				Products  productRes = new Products();
+				productRes.setProductId((Long)obj[0]);
+				productRes.setProductName((String)obj[1]);
+				productsNames.add(productRes);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new ProductServiceException("Unable to get the product names");
+		}
+		return productsNames;
+	}
 
 }

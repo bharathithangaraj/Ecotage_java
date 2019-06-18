@@ -18,4 +18,6 @@ public interface ProductDAO {
 	public ResponseMessage addProduct(LinkedList<AddProduct> productList) throws ProductServiceException;
 	
 	public Products getProduct(Long ProductId) throws ProductServiceException;
+	
+	public List<Products> getProductsName() throws ProductServiceException;
 }
